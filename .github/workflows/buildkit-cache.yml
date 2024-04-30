@@ -38,10 +38,22 @@ jobs:
       - name: Increment version
         id: increment_version
         run: |
-            current_version="${{ steps.read_version.outputs.current_version }}" 
-            echo "Current version: $current_version" 
-            next_version=$(awk -F. '{printf "%d.%d.%d", $1, $2, $3 + 1}' <<< "$current_version" || echo '0.0.0')
-            echo "::set-output name=next_version::$next_version" >> $GITHUB_OUTPUT
+          current_version="${{ steps.read_version.outputs.current_version }}"
+          echo "Current version: $current_version" 
+
+          # Splitting version into major, minor, and patch components
+          IFS='.' read -r major minor patch <<< "$current_version"
+
+          # Incrementing the patch component
+          ((patch++))
+
+          # Constructing the next version
+          next_version="$major.$minor.$patch"
+
+          echo "Next version: $next_version"
+
+          # Setting the output
+          echo "::set-output name=next_version::$next_version" >> $GITHUB_OUTPUT
 
       - name: Write new version to file
         run: echo "${{ steps.increment_version.outputs.next_version }}" > version.txt
