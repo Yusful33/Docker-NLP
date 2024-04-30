@@ -38,6 +38,10 @@ jobs:
       - name: Write new version to file
         run: echo "${{ steps.increment_version.outputs.next_version }}" > version.txt
 
+      - name: Echo version.txt contents
+        run: cat version.txt
+
+
       - name: Build and push Docker image
         uses: docker/build-push-action@v2
         with:
