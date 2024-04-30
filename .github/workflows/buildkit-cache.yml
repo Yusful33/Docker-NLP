@@ -53,13 +53,7 @@ jobs:
           echo "Next version: $next_version"
 
           # Setting the output
-          echo "::set-output name=next_version::$next_version" >> $GITHUB_OUTPUT
-
-      - name: Write new version to file
-        run: echo "${{ steps.increment_version.outputs.next_version }}" > version.txt
-
-      - name: Debug next_version
-        run: echo "${{ steps.increment_version.outputs.next_version }}"
+          echo "next_version=$next_version" >> $GITHUB_OUTPUT
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v2
