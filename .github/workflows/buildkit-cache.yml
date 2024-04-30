@@ -39,9 +39,7 @@ jobs:
         run: echo "${{ steps.increment_version.outputs.next_version }}" > version.txt
 
       - name: Debug next_version
-        run: echo "Next version: ${{ steps.increment_version.outputs.next_version }}"
-
-
+        run: echo "${{ steps.increment_version.outputs.next_version }}"
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v2
