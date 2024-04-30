@@ -62,7 +62,8 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/basic-nlp:${{ steps.increment_version.outputs.next_version }}
+          tags: ${{ secrets.DOCKER_USERNAME }}/basic-nlp:0.0.0
+          # tags: ${{ secrets.DOCKER_USERNAME }}/basic-nlp:${{ steps.increment_version.outputs.next_version }}
 #NEW: (START) ##########################################################
           cache-from: type=gha
           cache-to: type=gha,mode=max
