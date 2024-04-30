@@ -41,16 +41,16 @@ jobs:
           current_version="${{ steps.read_version.outputs.current_version }}"
           echo "Current version: $current_version" 
 
-          # Splitting version into major, minor, and patch components
-          IFS='.' read -r major minor patch <<< "$current_version"
-
-          echo "$IFS"
-
-          # Incrementing the patch component
-          ((patch++))
-
-          # Constructing the next version
-          next_version="$major.$minor.$patch"
+          if [[ "$current_version" != "0.0.0" && "$current_version" > "0.0.0" ]]; then
+            echo "Version is greater than 0.0.0, updating version"
+            # Splitting version into major, minor, and patch components
+            IFS='.' read -r major minor patch <<< "$current_version"
+            ((patch++))
+            next_version="$major.$minor.$patch"
+          else
+            echo "Version is not greater than 0.0.0, returning 0.0.0"
+            next_version="0.0.0"
+          fi
 
           echo "Next version: $next_version"
 
