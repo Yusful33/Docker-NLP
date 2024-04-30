@@ -13,14 +13,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
-      - name: Debug
-        env:
-          DOCKERHUB_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-          DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
-        run: |
-          echo "DOCKERHUB_USERNAME: $DOCKERHUB_USERNAME"
-          echo "DOCKERHUB_TOKEN: $DOCKERHUB_TOKEN"
-
 
       - name: Login to Docker Hub
         uses: docker/login-action@v3
@@ -37,11 +29,11 @@ jobs:
         run: echo "::set-output name=current_version::$(cat version.txt || echo '0.0.0')" >> $GITHUB_OUTPUT
 
       - name: Increment version
-       id: increment_version
-       run: |
-          current_version="${{ steps.read_version.outputs.current_version }}"
-          next_version=$(awk -F. '{printf "%d.%d.%d", $1, $2, $3 + 1}' <<< "$current_version" || echo '0.0.0')
-          echo "::set-output name=next_version::$next_version" >> $GITHUB_OUTPUT
+        id: increment_version
+        run: |
+            current_version="${{ steps.read_version.outputs.current_version }}"
+            next_version=$(awk -F. '{printf "%d.%d.%d", $1, $2, $3 + 1}' <<< "$current_version" || echo '0.0.0')
+            echo "::set-output name=next_version::$next_version" >> $GITHUB_OUTPUT
 
       - name: Write new version to file
         run: echo "${{ steps.increment_version.outputs.next_version }}" > version.txt
