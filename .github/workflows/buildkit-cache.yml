@@ -52,7 +52,7 @@ jobs:
             next_version="0.0.0"
           fi
 
-          echo "Next version: $next_version"
+          echo "Next version is: $next_version"
 
           # Setting the output
           echo "increase_version=$next_version" >> $GITHUB_OUTPUT
