@@ -38,8 +38,9 @@ jobs:
       - name: Write new version to file
         run: echo "${{ steps.increment_version.outputs.next_version }}" > version.txt
 
-      - name: Echo version.txt contents
-        run: cat version.txt
+      - name: Debug next_version
+        run: echo "Next version: ${{ steps.increment_version.outputs.next_version }}"
+
 
 
       - name: Build and push Docker image
