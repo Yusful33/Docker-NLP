@@ -49,11 +49,8 @@ jobs:
           # Splitting version into major, minor, and patch components
 
           major=$(echo "$current_version" | cut -d '.' -f 1)
-          echo "Major: $major"
           minor=$(echo "$current_version" | cut -d '.' -f 2)
-          echo "mino: $minor"
           patch=$(echo "$current_version" | cut -d '.' -f 3)
-          echo "patch: $patch"
           patch=$((patch + 1))
 
           echo "Patch New: $patch"
