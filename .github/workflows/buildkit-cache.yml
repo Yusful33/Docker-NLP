@@ -49,6 +49,7 @@ jobs:
           echo "Version is greater than 0.0.0, updating version"
           # Splitting version into major, minor, and patch components
           IFS='.' read -r major minor patch <<< "$current_version"
+          echo "IFS is: $IFS"
           ((patch++))
           next_version="$major.$minor.$patch"
 
