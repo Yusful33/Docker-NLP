@@ -27,8 +27,10 @@ jobs:
       - name: Read current version
         id: read_version
         run: |
-            if [ -f "version.txt" ]; then
-              version=$(cat version.txt)
+            LATEST_TAG=$(docker pull --all-tags ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKERHUB_REPO }} | tail -n 1 | awk '{print $2}')
+            ECHO "Pull latest_tag: $LATEST_TAG"
+            if $LATEST_TAG; then
+              version=$LATEST_TAG
             else
               version='0.0.0'  # Set default version if file doesn't exist
             fi
@@ -56,7 +58,7 @@ jobs:
 
           # Setting the output
           echo "increase_version=$next_version" >> $GITHUB_OUTPUT
-          
+
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
