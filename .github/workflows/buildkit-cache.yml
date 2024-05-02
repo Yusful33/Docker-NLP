@@ -27,15 +27,16 @@ jobs:
       - name: Read current version
         id: read_version
         run: |
-            LATEST_TAG=$(docker pull --all-tags ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKERHUB_REPO }} | tail -n 1 | awk '{print $2}')
-            ECHO "Pull latest_tag: $LATEST_TAG"
-            if $LATEST_TAG; then
+            DOCKERHUB_REPO="${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKERHUB_REPO }}"
+            LATEST_TAG=$(docker pull --all-tags $DOCKERHUB_REPO | tail -n 1 | awk '{print $2}')
+            echo "Pull latest_tag: $LATEST_TAG"
+            if [ -n "$LATEST_TAG" ]; then
               version=$LATEST_TAG
             else
-              version='0.0.0'  # Set default version if file doesn't exist
+              version='0.0.0'  # Set default version if tag doesn't exist
             fi
             echo "Current version: $version"
-            echo "current_version=$version" >> $GITHUB_OUTPUT
+            echo "current_version=$version" >>>> $GITHUB_OUTPUT
 
       - name: Increment version
         id: increment_version
