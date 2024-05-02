@@ -54,7 +54,9 @@ jobs:
           echo "mino: $minor"
           patch=$(echo "$current_version" | cut -d '.' -f 3)
           echo "patch: $patch"
-          ((patch++))
+          patch=$((patch + 1))
+
+          echo "Patch New: $patch"
           next_version="$major.$minor.$patch"
 
           echo "Next version is: $next_version"
