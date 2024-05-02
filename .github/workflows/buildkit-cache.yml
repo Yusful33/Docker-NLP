@@ -60,7 +60,8 @@ jobs:
         name: Build and push
         uses: docker/build-push-action@v5
         with:
-          context: ./test
+          context: .
+          file: Dockerfile
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/basic-nlp:${{ steps.increment_version.outputs.increase_version }}
 
