@@ -28,7 +28,7 @@ jobs:
         id: read_version
         run: |
             DOCKERHUB_REPO="${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKERHUB_REPO }}"
-            LATEST_TAG=$(docker pull --all-tags $DOCKERHUB_REPO | tail -n 1 | awk '{print $2}')
+            LATEST_TAG="curl -s "https://hub.docker.com/v2/repositories/$DOCKERHUB_REPO/tags/?page_size=1" | jq -r '.results[0].name'"
             echo "Pull latest_tag: $LATEST_TAG"
             if [ -n "$LATEST_TAG" ]; then
               version=$LATEST_TAG
