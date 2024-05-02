@@ -30,7 +30,7 @@ jobs:
             DOCKERHUB_REPO="${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKERHUB_REPO }}"
             PAGE_INFO=$(curl -s "https://hub.docker.com/v2/repositories/yusufcattaneo836/basic-nlp/tags/?page_size=1")
             echo "Page info: $PAGE_INFO"
-            LATEST_TAG=$(echo "$page_info" | jq -r '.results[0].name')
+            LATEST_TAG=$(echo "$PAGE_INFO" | jq -r '.results[0].name')
             echo "Pull latest_tag: $LATEST_TAG"
             if [ -n "$LATEST_TAG" ]; then
               version=$LATEST_TAG
