@@ -28,10 +28,11 @@ jobs:
         id: read_version
         run: |
             DOCKERHUB_REPO="${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKERHUB_REPO }}"
-            LATEST_TAG="curl -s "https://hub.docker.com/v2/repositories/$DOCKERHUB_REPO/tags/?page_size=1" | jq -r '.results[0].name'"
-            echo "Pull latest_tag: $LATEST_TAG"
-            if [ -n "$LATEST_TAG" ]; then
-              version=$LATEST_TAG
+            PAGE_INFO=$(curl -s "https://hub.docker.com/v2/repositories/yusufcattaneo836/basic-nlp/tags/?page_size=1")
+            LATEST_TAG=$(echo "$page_info" | jq -r '.results[0].name')
+            echo "Pull latest_tag: $PAGE_INFO"
+            if [ -n "$PAGE_INFO" ]; then
+              version=$PAGE_INFO
             else
               version='0.0.0'  # Set default version if tag doesn't exist
             fi
